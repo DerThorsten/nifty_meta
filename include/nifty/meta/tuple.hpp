@@ -3,6 +3,8 @@
 #include <tuple>
 #include <type_traits>
 
+#include "nifty/meta/integral_constant.hpp"
+
 namespace nifty{
 namespace meta{
 
