@@ -8,11 +8,6 @@
 namespace nifty{
 namespace meta{
 
-   template<std::size_t VAL>
-   using SizeT = std::integral_constant<std::size_t, VAL>;
-
-    
-
 
     template <class T, class Tuple>
     struct TupleTypeIndex;
