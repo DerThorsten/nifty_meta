@@ -58,7 +58,7 @@ namespace meta{
         template<std::size_t I>
         using Helper = T;
 
-        typedef GenerateTuple<N, Helper> type;
+        typedef typename GenerateTuple<N, Helper>::type type;
     };
 
 }
