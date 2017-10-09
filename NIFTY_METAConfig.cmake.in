@@ -9,6 +9,5 @@
 
 set(PN NIFTY_META)
 set_and_check(${PN}_INCLUDE_DIRS "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_INCLUDEDIR@")
-set_and_check(${PN}_LIBRARY      "${PACKAGE_PREFIX_DIR}/@CMAKE_INSTALL_LIBDIR@"/qpbo)
 set(${PN}_LIBRARY "")
 check_required_components(${PN})
