@@ -2,7 +2,7 @@
 
 
 #define NIFTY_META_VERSION_MAJOR 0
-#define NIFTY_META_VERSION_MINOR 4
+#define NIFTY_META_VERSION_MINOR 5
 #define NIFTY_META_VERSION_PATCH 1
 
 // DETECT 3.6 <= clang < 3.8 for compiler bug workaround.
