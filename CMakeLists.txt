@@ -1,9 +1,23 @@
 cmake_minimum_required(VERSION 3.1)
 set(CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/modules)
 
-SET(PROJECT_NAME "nifty_meta")
-project(nifty_meta)
+project(NIFTY_META)
+set(${PROJECT_NAME}_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
+#-------------------------------------------------------------------------------------------------------------------
+# Version
+#-------------------------------------------------------------------------------------------------------------------
+# as seen in the github.com/QuantStack/xtensor
+file(STRINGS "${${PROJECT_NAME}_INCLUDE_DIR}/nifty/meta/meta_config.hpp" ${PROJECT_NAME}_version_defines
+     REGEX "#define ${PROJECT_NAME}_VERSION_(MAJOR|MINOR|PATCH)")
+foreach(ver ${${PROJECT_NAME}_version_defines})
+    if(ver MATCHES "#define ${PROJECT_NAME}_VERSION_(MAJOR|MINOR|PATCH) +([^ ]+)$")
+        set(${PROJECT_NAME}_VERSION_${CMAKE_MATCH_1} "${CMAKE_MATCH_2}" CACHE INTERNAL "")
+    endif()
+endforeach()
+set(${PROJECT_NAME}_VERSION 
+    ${${PROJECT_NAME}_VERSION_MAJOR}.${${PROJECT_NAME}_VERSION_MINOR}.${${PROJECT_NAME}_VERSION_PATCH})
+message(STATUS "${PROJECT_NAME} v${${PROJECT_NAME}_VERSION}")
 
 
 
@@ -144,3 +158,33 @@ endif()
 #-------------------------------------------------------------------------------------------------------------------
 add_subdirectory(src)
 
+
+
+
+
+#------------------------------------------------------------------------------------------------------------------
+# install
+#-------------------------------------------------------------------------------------------------------------------
+include(GNUInstallDirs)
+include(CMakePackageConfigHelpers)
+
+
+install(DIRECTORY  ${${PROJECT_NAME}_INCLUDE_DIR}/nifty/infusion
+        DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nifty)
+
+
+set(${PROJECT_NAME}_CMAKECONFIG_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}/cmake/${PROJECT_NAME}" CACHE
+    STRING "install path for ${PROJECT_NAME}Config.cmake")
+
+configure_package_config_file(${PROJECT_NAME}Config.cmake.in
+                              "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake"
+                              INSTALL_DESTINATION ${${PROJECT_NAME}_CMAKECONFIG_INSTALL_DIR})
+
+
+write_basic_package_version_file(${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+                                 VERSION ${${PROJECT_NAME}_VERSION}
+                                 COMPATIBILITY AnyNewerVersion)
+
+install(FILES ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}Config.cmake
+              ${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake
+        DESTINATION ${${PROJECT_NAME}_CMAKECONFIG_INSTALL_DIR})
