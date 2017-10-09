@@ -169,7 +169,7 @@ include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
 
-install(DIRECTORY  ${${PROJECT_NAME}_INCLUDE_DIR}/nifty/infusion
+install(DIRECTORY  ${${PROJECT_NAME}_INCLUDE_DIR}/nifty/meta
         DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/nifty)
 
 
